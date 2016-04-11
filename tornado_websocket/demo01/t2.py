@@ -27,13 +27,13 @@ rc.connect()
 class MainHandler(tornado.web.RequestHandler):
 
     def get(self):
-        self.render("index2.html")
+        self.render("index2.html", title="PubSub + WebSocket Demo")
 
 
 class NewMessageHandler(tornado.web.RequestHandler):
 
     def post(self):
-        message = self.get_message("message")
+        message = self.get_argument("message")
         rc.publish("chat", message)
         self.set_header('Content-Type', 'text/plain')
         self.write('sent: %s' % message)
@@ -60,6 +60,7 @@ class MessageHandler(tornado.websocket.WebSocketHandler):
             # to the client and close the client connection
             self.write_message('The connection terminated'
                                ' due to a Redis server error.')
+            self.close()
 
     def on_close(self):
         if self.client.subscribed:
@@ -67,13 +68,27 @@ class MessageHandler(tornado.websocket.WebSocketHandler):
             self.client.disconnect()
 
 
-application = tornado.web.Application([
-    (r'/', MainHandler),
-    (r'/msg', NewMessageHandler),
-    (r'/track', MessageHandler),
-])
+class Application(tornado.web.Application):
+
+    def __init__(self):
+        handlers = [
+            (r'/', MainHandler),
+            (r'/msg', NewMessageHandler),
+            (r'/track', MessageHandler),
+        ]
+        settings = dict(
+            cookie_secret="lsadjfolasjfd",
+            template_path=os.path.join(os.path.dirname(__file__), "templates"),
+            static_path=os.path.join(os.path.dirname(__file__), "static"),
+        )
+        tornado.web.Application.__init__(self, handlers, **settings)
+
+
+def main():
+    tornado.options.parse_command_line()
+    app = Application()
+    app.listen(options.port)
+    tornado.ioloop.IOLoop.instance().start()
 
 if __name__ == "__main__":
-    http_server = tornado.httpserver.HTTPServer(application)
-    http_server.listen(options.port)
-    tornado.ioloop.IOLoop.instance().start()
+    main()
