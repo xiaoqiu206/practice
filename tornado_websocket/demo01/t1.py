@@ -72,7 +72,7 @@ class ChatSocketHandler(tornado.websocket.WebSocketHandler):
     def on_message(self, msg):
         logging.info("%s get message %s" % (self.request.remote_ip, msg))
         if msg.kind == 'message':
-            self.write_message(str(msg.body))
+            self.write_message(msg.body.encode('utf-8'))
         if msg.kind == 'disconnect':
             self.write_message("The connection terminated"
                                "due to a Redis server error.")

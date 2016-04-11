@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>聊天室</title>
+    <script src="http://lib.sinaapp.com/js/jquery/1.9.1/jquery-1.9.1.min.js"></script>
 </head>
 
 <body onload="init()">
@@ -11,10 +12,8 @@
 
     </div>
     <br>
-    <form action="/msg" method="POST" target="_hidden">
-        <input name="message" type="text" id="message" onkeypress="if(event.keyCode==13) {document.getElementById('send_btn').click();return false;}" />
-        <input type="submit" value="发送" id="send_btn">
-    </form>
+    <input type="text" id="message" onkeypress="if(event.keyCode==13) {document.getElementById('send_btn').click();return false;}">
+    <input type="button" value="发送" id="send_btn" onclick="send_message();">
     <script>
         socket = new WebSocket("ws://localhost/chat");
          function init(){
@@ -27,11 +26,15 @@
          function send_message(){
              var message =document.getElementById('message').value; 
             // socket.send(message);
-            
+            $.post("/msg",{"message":message},function(result){
+                
+            });
             document.getElementById('message').value = '';    
-            var char_div = document.getElementById("chat_content");
-            char_div.innerHTML += "<p>"+get10spaces()+get_time()+message+"</p>";
-            char_div.scrollTop = char_div.scrollHeight;
+            // var char_div = document.getElementById("chat_content");
+            // char_div.innerHTML += "<p>"+get10spaces()+get_time()+message+"</p>";
+            // char_div.scrollTop = char_div.scrollHeight;
+             // ajax发送post请求
+             
          }
          function get_time(){
              var now = new Date();
