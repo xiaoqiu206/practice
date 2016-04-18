@@ -9,6 +9,7 @@ import tornado.options
 import tornado.websocket
 import tornadoredis
 import tornado.gen
+from tornado.web import asynchronous
 
 import logging
 import os.path
@@ -40,6 +41,7 @@ class Application(tornado.web.Application):
 
 class NewMessageHandler(tornado.web.RequestHandler):
 
+    @asynchronous
     def post(self):
         message = self.get_argument('message')
         rc.publish('chat', message)
@@ -49,6 +51,7 @@ class NewMessageHandler(tornado.web.RequestHandler):
 
 class MainHandler(tornado.web.RequestHandler):
 
+    @asynchronous
     def get(self):
         self.render("index1.html")
 

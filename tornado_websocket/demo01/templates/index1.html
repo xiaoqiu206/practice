@@ -16,33 +16,39 @@
     <input type="button" value="发送" id="send_btn" onclick="send_message();">
     <script>
         socket = new WebSocket("ws://localhost/chat");
-         function init(){
-             socket.onmessage = function (e){
-                 var char_div = document.getElementById("chat_content");
-                 char_div.innerHTML += "<p>"+get_time()+e.data+"</p>";
-                 char_div.scrollTop = char_div.scrollHeight;
-             };
-         };
-         function send_message(){
-             var message =document.getElementById('message').value; 
+
+        function init() {
+            socket.onmessage = function(e) {
+                var char_div = document.getElementById("chat_content");
+                char_div.innerHTML += "<p>" + get_time() + e.data + "</p>";
+                char_div.scrollTop = char_div.scrollHeight;
+            };
+        };
+
+        function send_message() {
+            var message = document.getElementById('message').value;
             // socket.send(message);
-            $.post("/msg",{"message":message},function(result){
-                
+            $.post("/msg", {
+                "message": message
+            }, function(result) {
+
             });
-            document.getElementById('message').value = '';    
+            document.getElementById('message').value = '';
             // var char_div = document.getElementById("chat_content");
             // char_div.innerHTML += "<p>"+get10spaces()+get_time()+message+"</p>";
             // char_div.scrollTop = char_div.scrollHeight;
-             // ajax发送post请求
-             
-         }
-         function get_time(){
-             var now = new Date();
-             return now.getHours() + ":" + now.getMinutes()+ ":"+now.getSeconds()+"&nbsp;";
-         }
-         function get10spaces(){
-             return "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-         }
+            // ajax发送post请求
+
+        }
+
+        function get_time() {
+            var now = new Date();
+            return now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds() + "&nbsp;";
+        }
+
+        function get10spaces() {
+            return "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+        }
     </script>
 </body>
 

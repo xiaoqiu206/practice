@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>hello world</title>
+    <script src="vue.js"></script>
+</head>
+
+<body>
+    <!--简单的单向绑定-->
+    <div id="app">
+        {{ message }}
+    </div>
+    <script>
+        new Vue({
+            el: "#app",
+            data: {
+                message: 'hello world'
+            }
+        });
+    </script>
+</body>
+
+</html>
