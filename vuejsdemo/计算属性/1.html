@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>基础例子</title>
+    <script src="../vue.js" charset="utf-8"></script>
+</head>
+<body>
+    <div id="example">
+        a={{a}},b={{b}}
+    </div>
+    <script type="text/javascript">
+        var vm = new Vue({
+            el:"#example",
+            data:{
+                a:1
+            },
+            computed:{
+                b: function(){
+                    // this 指向vm实例
+                    return this.a + 1
+                }
+            }
+        })
+    </script>
+<!-- 可以打开浏览器的控制台修改vm.a, vm.b的值始终取决于vm.a的值 -->
+
+</body>
+</html>

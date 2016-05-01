@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>插值</title>
+</head>
+<body>
+    <!-- Mustache语法(双大括号) -->
+    <span>Message: {{ msg }}</span>
+    <!-- mustache标签会被相应数据对象的msg属性的值替换.每当这个属性变化时它也会更新 -->
+    <!--你也可以只处理单次插值,今后数据变化就不会再引起插值更新了 -->
+    <span>This will never change: {{ *msg }}</span>
+
+    <!-- 双mustance标签将数据解析为纯文本而不是html,为了输出真的HTML字符串,需要用三mustance标签 -->
+    <div class="">
+        {{{ raw_html }}}
+    </div>
+
+    mustache标签也可以用在html特性(Attributes)内:
+    <div id="item-{{ id }}"></div>
+
+    <!-- vuejs在数据绑定内支持全功能的js表达式 -->
+    {{ number + 1 }}
+    {{ ok ? 'YES' : 'NO'}}
+    {{ message.split('').reverse().join('') }}
+
+    <!-- vuejs允许在表达式后添加可选的过滤器,以管道符提示: -->
+    {{ message | capitalize }}
+    <!-- 管道语法不是js语法,因此不能在表达式内使用过滤器,只能添加到表达式的后面 -->
+    <!-- 过滤器可以串联,也可以接受参数 -->
+    {{ message | filterA | filterB }}
+    {{ messgae | filterA 'arg1' arg2 }}
+    <!-- 过滤器函数始终以表达式的值作为第一个参数.带引号的参数视为字符串,而不带引号的参数按表达式计算 -->
+
+    <!-- 指令是特殊的带有前缀v-的特性.指令的值限定为绑定表达式.指定的职责就是当其表达式的值改变时
+    把某些特殊的行为应用到DOM上 -->
+    <p v-if="greeting">Hello!</p>
+
+    <!-- ;有些指令可以在其名称后面带一个"参数",中间放一个冒号隔开 -->
+    <a v-bind:href="url"></a>
+    <!-- 这里href是参数,它告诉v-bind指令将元素的href特性跟表达式Url的值绑定,
+    可以用特性插值href="{{url}}"获得同样的结果:这样没错,并且实际上在内部特性插值会转换为v-bind绑定 -->
+    <a v-on:click="doSomething"></a>
+
+    <!-- 修饰符是以半角句号开始的特殊后缀,用于表示指令应当以特殊方式绑定.例如.literal修饰符
+    告诉指令将它的值解析为一个字面字符串而不是一个表达式 -->
+    <a v-bind:href.literal="/a/b/c"></a>
+    <!-- 当然,这似乎没有意义,这个例子只是为了演示语法 -->
+
+    <!-- 缩写 -->
+    <!-- 完整语法 -->
+    <a v-bind:href="url"></a>
+    <!-- 缩写 -->
+    <a :href="url"></a>
+    <!-- 完整语法 -->
+    <button v-bind:disabled="SomeDynamicCondition">Button</button>
+    <!-- 缩写 -->
+    <button :disabled="SomeDynamicCondition"></button>
+
+    <!-- v-on缩写 -->
+
+
+</body>
+</html>
