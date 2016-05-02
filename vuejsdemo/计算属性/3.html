@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>计算setter</title>
+        <script src="../vue.js" charset="utf-8"></script>
+    </head>
+    <body>
+        <!-- 计算属性默认只是getter,不过在需要时也可以提供一个setter, -->
+
+        <div class="demo">
+            {{fullName}}
+        </div>
+
+        <script type="text/javascript">
+            var vm = new Vue({
+                el: ".demo",
+                data:{
+                    firstName: 'Foo',
+                    lastName: 'Bar'
+                },
+                computed:{
+                    fullName:{
+                    get:function(){
+                        return this.firstName + ' ' + this.lastName
+                    },
+
+                    set:function(newValue){
+                        var names = newValue.split(' ');
+                        this.firstName = names[0];
+                        this.lastName = names[names.length-1];
+                    }}
+                }
+            })
+        </script>
+        <!-- 现在调用vm.fullName = 'Qiu Yang'时,setter会被调用,
+        vm.firstName和vm.lastName也会有相应的更新 -->
+    </body>
+</html>

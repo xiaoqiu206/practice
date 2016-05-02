@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>条件渲染</title>
+    <script src="../vue.js"></script>
+</head>
+<body>
+    <h1 v-if="ok">Yes</h1>
+
+<!-- 在vue.js中,我们使用v-if指令,也可以用v-else添加一个"else"块 -->
+
+    <h1 v-if="ok">Yes</h1>
+    <h1 v-else>No</h1>
+
+<!-- 因为v-if是一个指令,需要将它添加到一个元素上.但是如果我们想切换多个元素呢
+此时我们可以把一个<template>元素当作包装元素,并在上面使用v-if -->
+<div id="demo">
+    <template v-if="ok">
+        <h1>title</h1>
+        <p>paragraph 1</p>
+        <p>paragraph</p>
+    </template>
+</div>
+<!-- 另一个根据条件展示元素的选项是v-show指令,用法是: -->
+    <h1 v-show="ok">Hello!</h1>
+
+<!-- 不同的是,v-show的元素会始终渲染并保持在DOM中,v-show是简单的切换元素的CSS属性display -->
+<!-- 注意v-show不支持<template>语法 -->
+
+<script>
+    var vm = new Vue({
+        el:'#demo',
+        data:{
+            ok:true
+        }
+    })
+
+</script>
+</body>
+</html>

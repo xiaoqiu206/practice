@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>直接绑定数据里的一个对象</title>
+    <script src="../vue.js"></script>
+</head>
+<body>
+    <div v-bind:class="classObject"></div>
+    <script>
+        var vm = new Vue({
+            el: 'div',
+            data:{
+                classObject:{
+                    'class-a':true,
+                    'class-b':false
+                }
+            }
+        })
+    </script>
+</body>
+</html>

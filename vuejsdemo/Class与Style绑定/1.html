@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>绑定HTML Class</title>
+    <script src="../vue.js"></script>
+    <style>
+    div{
+        width: 200px;
+        height: 200px;
+    }
+    .class-a{
+        background-color:green;
+    }
+    .class-b{
+        background-color: black;
+    }
+    </style>
+</head>
+<body>
+    <!-- 尽管可以使用Mustanche绑定class,比如class="{{className}}",
+    但是我们不推荐这种写法和v-bind:class混用,两者只能选其一 -->
+
+    <!-- 对象语法,我们可以传给v-bind:class一个对象,以动态地切换class,
+    v-bind:class指令可以和普通的class特性共存 -->
+    <div class="static" v-bind:class="{'class-a':isA, 'class-b':isB}"></div>
+    <script>
+        var vm = new Vue({
+            el: ".static",
+            data:{
+                isA: true,
+                isB: false
+            }
+        })
+    </script>
+
+</body>
+</html>

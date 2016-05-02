@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>数组语法</title>
+    <script src="../vue.js"></script>
+</head>
+<body>
+    <div v-bind:class="[classA, classB]"></div>
+    <script>
+    var vm = new Vue({
+        el: 'div',
+        data:{
+            classA:'class-a',
+            classB:'class-b'
+        }
+    })
+    </script>
+    <!-- 或者使用三元表达式 -->
+    <div v-bind:class="[classA,isB ? classB : '']"></div>
+    <!-- 此例始终添加classA,但是只有在isB是true时添加classB -->
+    <!-- 不过,当有多个条件class时这样写有些繁琐,在1.0.19+中,可以在数组语法中使用对象语法 -->
+    <div v-bind:class="[classA, {classB: isB, classC: isC }]"></div>
+</body>
+</html>
