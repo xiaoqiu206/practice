@@ -21,7 +21,7 @@ class Inventory(object):
     @product.setter
     def product(self, value):
         self._product = value
-        self._update_observers()
+        # self._update_observers()
 
     @property
     def quantity(self):
@@ -34,7 +34,9 @@ class Inventory(object):
 
     def _update_observers(self):
         for observer in self.observers:
-            observer()
+            observer.print_self()
+
+Inventory.abc()
 
 
 class ConsoleObserver(object):
@@ -42,7 +44,7 @@ class ConsoleObserver(object):
     def __init__(self, inventory):
         self.inventory = inventory
 
-    def __call__(self):
+    def print_self(self):
         print self.inventory.product
         print self.inventory.quantity
 
