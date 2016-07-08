@@ -9,6 +9,7 @@ import ssl
 import json
 import struct
 import binascii
+import time
 
 
 def Payload(alert='', badge=1, data={}):
@@ -23,17 +24,20 @@ def Payload(alert='', badge=1, data={}):
     return payload
 
 
-def APN(token, payload, theCertfile):
-    theHost = ('gateway.push.apple.com', 2195)
+def APN(tokens, payload, theCertfile):
+    theHost = ('gateway.sandbox.push.apple.com', 2195)
 
     data = json.dumps(payload)
 
     # Clear out spaces in the device token and convert to hex
-    deviceToken = token.replace(' ', '')
-    byteToken = binascii.unhexlify(token)
+    notices = []
+    for token in tokens:
+        deviceToken = token.replace(' ', '')
+        byteToken = binascii.unhexlify(deviceToken)
 
-    theFormat = '!BH32sH%ds' % len(data)
-    theNotification = struct.pack(theFormat, 0, 32, byteToken, len(data), data)
+        theFormat = '!BH32sH%ds' % len(data)
+        notice = struct.pack(theFormat, 0, 32, byteToken, len(data), data)
+        notices.append(notice)
 
     # Create our connection using the certfile saved locally
     ssl_sock = ssl.wrap_socket(
@@ -43,10 +47,14 @@ def APN(token, payload, theCertfile):
     ssl_sock.connect(theHost)
 
     # Write out our data
-    ssl_sock.write(theNotification)
-
+    for notice in notices:
+        ssl_sock.write(notice)
     # Close the connection -- apple would prefer that we keep
     # a connection open and push data as needed.
+    ''' 
+    recv_data = struct.unpack('!BBI', recv_data)
+    print recv_data
+    '''
     ssl_sock.close()
 
     return True
