@@ -6,7 +6,7 @@ Created on 2016年5月4日
 '''
 import os
 
-files = os.walk("/home/qiu/fengge/server")
+files = os.walk("/home/qiu/workspace/whhm")
 count1 = count2 = 0
 for root, dir, files in files:
     if not dir:
