@@ -10,3 +10,6 @@ __pycache__/
 .project
 .settings/*
 .pydevproject
+
+# pycharm files
+.idea/*
